@@ -22,20 +22,21 @@ public class ArticleListServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		response.setContentType("text/html; charset=UTF-8;");
-		
 		Connection conn = null;
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			String url = "jdbc:mysql://127.0.0.1:3306/JAM?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
-			conn = DriverManager.getConnection(url, "root", "");
+			String url = "jdbc:mysql://127.0.0.1:3306/JSPAM?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
+			conn = DriverManager.getConnection(url, "root", "chlgyqls15");
 			
 			SecSql sql = SecSql.from("SELECT * FROM article");
+			sql.append("ORDER BY id DESC");
 			
 			List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
-		
-			response.getWriter().append("<div>" + articleListMap.toString() + "</div>");
+			
+			request.setAttribute("articleListMap", articleListMap);
+			
+			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
