@@ -14,19 +14,34 @@
 <title>게시물 상세보기</title>
 </head>
 <body>
-	<div>
- 		<a href="../hoem/main"></a>
-	</div>
-	<h1><%= articleMap.get("id") %>번 게시글 상세 보기</h1>
+	<h1><%= articleMap.get("id") %>번 게시물 상세보기</h1>
 	
-	<div>번호: <%= articleMap.get("id") %></div>
-	<div>작성일: <%= articleMap.get("regDate") %></div>
-	<div>제목: <%= articleMap.get("title") %></div>
-	<div>내용: <%= articleMap.get("body") %></div>
+	<table border="1">
+		<colgroup>
+			<col />
+			<col width="200"/>
+		</colgroup>
+		<tr>
+			<th>번호</th>
+			<td><%= articleMap.get("id") %></td>
+		</tr>
+		<tr>
+			<th>작성일</th>
+			<td><%= articleMap.get("regDate") %></td>
+		</tr>
+		<tr>
+			<th>제목</th>
+			<td><%= articleMap.get("title") %></td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td><%= articleMap.get("body") %></td>
+		</tr>
+	</table>
 	
 	<div>
-	<a href="list">목록</a>
-	<a href="doDelete?id=<%= articleMap.get("id") %>">삭제</a>
+		<a href="list">목록</a>
+		<a href="doDelete?id=<%= articleMap.get("id") %>">삭제</a>
 	</div>
 </body>
 </html>
