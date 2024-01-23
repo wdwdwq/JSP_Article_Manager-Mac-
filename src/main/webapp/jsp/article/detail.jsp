@@ -26,6 +26,7 @@
 	
 	<div>
 	<a href="list">목록</a>
+	<a href="doDelete?id=<%= articleMap.get("id") %>">삭제</a>
 	</div>
 </body>
 </html>

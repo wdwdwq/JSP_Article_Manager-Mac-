@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import com.hyobin.java.am.util.DBUtil;
@@ -15,16 +16,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/detail")
-public class ArticleDetailServlet extends HttpServlet {
+@WebServlet("/article/doDelete")
+public class ArticleDoDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		response.setContentType("text/html; charset=UTF-8; ");
 		
 		Connection conn = null;
-		
-		
-		
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -33,14 +33,12 @@ public class ArticleDetailServlet extends HttpServlet {
 			
 			int id = Integer.parseInt(request.getParameter("id"));
 			
-			SecSql sql = SecSql.from("SELECT * FROM article");
+			SecSql sql = SecSql.from("DELETE FROM article");
 			sql.append("WHERE id = ?", id);
 			
-			Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
+			DBUtil.delete(conn, sql);
 			
-			request.setAttribute("articleMap", articleMap);
-			
-			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
+			response.getWriter().append(String. format("<script>confirm('%d번 글을 삭제하시겠습니까?'); location.replace('list');</script>", id));
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
