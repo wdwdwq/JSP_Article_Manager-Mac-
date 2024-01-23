@@ -29,11 +29,30 @@ public class ArticleListServlet extends HttpServlet {
 			String url = "jdbc:mysql://127.0.0.1:3306/JSPAM?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
 			conn = DriverManager.getConnection(url, "root", "chlgyqls15");
 			
-			SecSql sql = SecSql.from("SELECT * FROM article");
+			int page = 1;
+			
+			if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
+				page = Integer.parseInt(request.getParameter("page"));
+			}
+			
+			int itemsInAPage = 10;
+			
+			int limitFrom = (page - 1) * itemsInAPage;
+			
+			SecSql sql = SecSql.from("SELECT COUNT(*) FROM article");
+			
+			int totalCount = DBUtil.selectRowIntValue(conn, sql);
+			
+			int totalPageCnt = (int) Math.ceil((double) totalCount / itemsInAPage);
+			
+			sql = SecSql.from("SELECT * FROM article");
 			sql.append("ORDER BY id DESC");
+			sql.append("LIMIT ?, ?", limitFrom, itemsInAPage);
 			
 			List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
 			
+			request.setAttribute("page", page);
+			request.setAttribute("totalPageCnt", totalPageCnt);
 			request.setAttribute("articleListMap", articleListMap);
 			
 			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
