@@ -41,6 +41,7 @@
 	
 	<div>
 		<a href="list">목록</a>
+		<a href="modify?id=<%= articleMap.get("id") %>">수정</a>
 		<a href="doDelete?id=<%= articleMap.get("id") %>">삭제</a>
 	</div>
 </body>
