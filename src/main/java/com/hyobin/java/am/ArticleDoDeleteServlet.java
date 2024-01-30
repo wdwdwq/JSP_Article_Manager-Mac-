@@ -4,11 +4,10 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 
 import com.hyobin.java.am.util.DBUtil;
 import com.hyobin.java.am.util.SecSql;
+import com.hyobin.java.config.Config;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,15 +20,14 @@ public class ArticleDoDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		response.setContentType("text/html; charset=UTF-8; ");
+		
+		response.setContentType("text/html; charset=UTF-8;");
 		
 		Connection conn = null;
 		
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			String url = "jdbc:mysql://127.0.0.1:3306/JSPAM?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
-			conn = DriverManager.getConnection(url, "root", "chlgyqls15");
+			Class.forName(Config.getDBDriverName());
+			conn = DriverManager.getConnection(Config.getDBUrl(), Config.getDBUser(), Config.getDBPassword());
 			
 			int id = Integer.parseInt(request.getParameter("id"));
 			
@@ -38,7 +36,7 @@ public class ArticleDoDeleteServlet extends HttpServlet {
 			
 			DBUtil.delete(conn, sql);
 			
-			response.getWriter().append(String. format("<script>confirm('%d번 글을 삭제하시겠습니까?'); location.replace('list');</script>", id));
+			response.getWriter().append(String.format("<script>alert('%d번 글을 삭제했습니다'); location.replace('list');</script>", id));
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
