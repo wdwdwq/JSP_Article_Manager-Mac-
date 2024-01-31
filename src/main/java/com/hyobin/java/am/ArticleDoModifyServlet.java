@@ -37,7 +37,7 @@ public class ArticleDoModifyServlet extends HttpServlet {
 			SecSql sql = SecSql.from("UPDATE article");
 			sql.append("SET updateDate = NOW()");
 			sql.append(", title = ?", title);
-			sql.append(", body = ?", body);
+			sql.append(", `body` = ?", body);
 			sql.append("WHERE id = ?", id);
 			
 			DBUtil.update(conn, sql);

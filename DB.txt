@@ -10,25 +10,46 @@ CREATE TABLE article(
 	`body` TEXT NOT NULL
 );
 
+CREATE TABLE `member`(
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	loginId VARCHAR(100) NOT NULL,
+	loginPw VARCHAR(100) NOT NULL,
+	`name` VARCHAR(100) NOT NULL
+);
+
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목1',
 `body` = '내용1';
-
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목2',
 `body` = '내용2';
-
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목3',
 `body` = '내용3';
 
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test1',
+loginPw = 'test1',
+`name` = 'test1';
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test2',
+loginPw = 'test2',
+`name` = 'test2';
+
 SELECT * FROM article;
+SELECT * FROM `member`;
 
 INSERT INTO article(regDate, updateDate, title, `body`)
 SELECT NOW(), NOW(), CONCAT('제목_', RAND()), CONCAT('내용_', RAND())
