@@ -10,6 +10,8 @@ CREATE TABLE article(
 	`body` TEXT NOT NULL
 );
 
+ALTER TABLE article ADD COLUMN memberId INT UNSIGNED NOT NULL AFTER updateDate;
+
 CREATE TABLE `member`(
 	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
@@ -34,6 +36,14 @@ SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목3',
 `body` = '내용3';
+
+UPDATE article
+SET memberId = 1
+WHERE id = 3;
+UPDATE article
+SET memberId = 2
+WHERE id IN(1, 2);
+
 
 INSERT INTO `member`
 SET regDate = NOW(),
