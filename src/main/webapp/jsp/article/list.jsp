@@ -35,12 +35,14 @@
 			<th>번호</th>
 			<th>작성일</th>
 			<th>제목</th>
+			<th>작성자</th>
 		</tr>
 		<% for (Map<String, Object> articleMap : articleListMap) { %>
 			<tr>
 				<td><%= (int) articleMap.get("id") %></td>
 				<td><%= (LocalDateTime) articleMap.get("regDate") %></td>
 				<td><a href="detail?id=<%= (int) articleMap.get("id") %>"><%= (String) articleMap.get("title") %></a></td>
+				<td><%= (String) articleMap.get("writerName") %></td>
 			</tr>
 		<% } %>
 	</table>

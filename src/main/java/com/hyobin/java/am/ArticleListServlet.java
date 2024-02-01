@@ -45,8 +45,11 @@ public class ArticleListServlet extends HttpServlet {
 			
 			int totalPageCnt = (int) Math.ceil((double) totalCount / itemsInAPage);
 			
-			sql = SecSql.from("SELECT * FROM article");
-			sql.append("ORDER BY id DESC");
+			sql = SecSql.from("SELECT A.*, M.name writerName");
+			sql.append("FROM article A");
+			sql.append("INNER JOIN `member` M");
+			sql.append("ON A.memberId = M.id");
+			sql.append("ORDER BY A.id DESC");
 			sql.append("LIMIT ?, ?", limitFrom, itemsInAPage);
 			
 			List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
