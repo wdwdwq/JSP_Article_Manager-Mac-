@@ -48,6 +48,7 @@ public class ArticleDetailServlet extends HttpServlet {
 			}
 			
 			request.setAttribute("loginedMemberId", loginedMemberId);
+			request.setAttribute("loginedMemberLoginId", session.getAttribute("loginedMemberLoginId"));
 			request.setAttribute("articleMap", articleMap);
 			
 			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);

@@ -24,6 +24,7 @@ public class HomeMainServlet extends HttpServlet {
 		}
 		
 		request.setAttribute("loginedMemberId", loginedMemberId);
+		request.setAttribute("loginedMemberLoginId", session.getAttribute("loginedMemberLoginId"));
 		
 		request.getRequestDispatcher("/jsp/home/main.jsp").forward(request, response);
 	}

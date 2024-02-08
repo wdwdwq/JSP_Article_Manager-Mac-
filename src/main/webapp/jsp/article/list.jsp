@@ -20,6 +20,8 @@
 <body>
 	
 	<h1>게시물 목록</h1>
+
+	<%@ include file="../common/topBar.jsp" %>
 	
 	<div>
 		<a href="write">글쓰기</a>

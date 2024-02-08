@@ -16,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/article/list")
 public class ArticleListServlet extends HttpServlet {
@@ -54,6 +55,16 @@ public class ArticleListServlet extends HttpServlet {
 			
 			List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
 			
+			HttpSession session = request.getSession();
+			
+			int loginedMemberId = -1;
+			
+			if (session.getAttribute("loginedMemberId") != null) {
+				loginedMemberId = (int) session.getAttribute("loginedMemberId");
+			}
+			
+			request.setAttribute("loginedMemberId", loginedMemberId);
+			request.setAttribute("loginedMemberLoginId", session.getAttribute("loginedMemberLoginId"));
 			request.setAttribute("itemsInAPage", itemsInAPage);
 			request.setAttribute("page", page);
 			request.setAttribute("totalPageCnt", totalPageCnt);
